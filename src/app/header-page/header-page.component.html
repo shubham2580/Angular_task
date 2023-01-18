@@ -1,0 +1,11 @@
+<div class="d-flex align-items-center header">
+    <div class="col-10" >
+        <h1 class="ml-3 mt-3">Task Management System</h1>
+    </div>
+<div *ngIf="userName" class="col-1">
+    <span>LogedIn:</span>
+    <div ><p class="font-weight-bold">{{userName}}</p></div>
+</div>
+<button *ngIf="userName" (click)="logout()" class="btn btn-danger ml-3">Logout</button>
+
+</div>

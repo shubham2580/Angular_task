@@ -1,0 +1,85 @@
+<!-- <div class="d-flex flex-row">
+    <div class="col-10 bg-info text-white">
+    <span>List of task</span>
+    </div>
+    <div class="col-2 bg-success text-white">
+     <button>Add Task</button>
+    </div>
+</div> -->
+
+
+<section  class="vh-100">
+    <div class="container py-5 h-100 w-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-10 col-xl-9 bg-light h-100 border-top-0">
+          <h2 class="w-100">Tasks</h2>
+          <div>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Sr. No</th>
+                    <th scope="col">Task</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Document</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let list of tasklist; index as i">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{list.task}}</td>
+                    <td>{{list.category}}</td>
+                    <td>{{list.discription}}</td>
+                    <td><button class="btn btn-secondary btn-sm rounded pill p-1" (click)="download(list)">Download</button></td>
+                    <td><button class="btn btn-secondary btn-sm rounded pill p-1" (click)="onEdit(list)">Edit</button></td>
+                    <td><button class="btn btn-danger btn-sm rounded pill p-1" (click)="onDelete(list.task_id)">Delete</button></td>
+                  </tr>
+               
+                </tbody>
+              </table>
+          </div>
+            
+        </div>
+        <div class="col-md-7 col-lg-5 col-xl-3 h-100 ">
+            <button  *ngIf="addButtonEnable" (click)="addTask()" class="btn btn-primary">Add Task</button>
+          <form *ngIf="showAddForm">
+            <div class="col-sm-12" *ngIf="errormsg">
+                <p class="text-danger">{{errormsg}}</p>
+              </div>
+            <div class="form-outline mb-4 mt-4">
+                <label class="form-label text-dark" for="form1Example13">Task</label>
+                <input type="text" id="form1Example13" name="givenTask" [(ngModel)]="givenTask" class="form-control mr-2" />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label text-dark" for="form1Example13">Select Category</label>
+                <select id="operator" name="operator" name="selectedCategory" [(ngModel)]="selectedCategory" class="form-control mr-2 ">
+                    <option value="and">All</option>
+                    <option *ngFor="let list of categoryList" value="{{list.category}}">{{list.category}}</option>
+                </select>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label text-dark" for="form1Example13">Discription</label>
+                <textarea  id="form1Example14" name="description" [(ngModel)]="description" class="form-control form-control-lg"></textarea>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label text-dark" for="form1Example13">Attachment</label>
+                <input type="file" id="form1Example16" class="form-control mr-2" (change)="onUploadDocument($event)" />
+            </div>
+            <div class="d-flex justify-content-between">
+                <button (click)="submit()" class="btn btn-primary">{{isEdit ? 'Update' : 'Submit'}}</button>
+                <button (click)="reset()" class="btn btn-primary">Reset</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  
