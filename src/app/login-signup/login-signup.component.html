@@ -27,7 +27,7 @@
             
   
             <!-- Submit button -->
-            <button (click)="login()" type="submit" class="btn btn-primary btn-lg btn-block w-100">Sign in</button>
+            <button (click)="loginUser()" type="submit" class="btn btn-primary btn-lg btn-block w-100">Sign in</button>
 
             <div class="d-flex justify-content-around align-items-center mb-4">
               
@@ -67,15 +67,15 @@
               <div class="col-sm-12" *ngIf="errormsg">
                 <p class="text-danger">{{errormsg}}</p>
               </div>
-              <div class="d-flex justify-content-between" >
-                <div class="form-outline mb-2 w-40">
+              <div class="d-flex justify-content-between raw" >
+                <div class="form-outline mb-2 w-40  col">
                     <label class="form-label text-dark" for="form1Example13">First Name</label>
                     <input placeholder="Enter First Name" type="text" id="form1Example21" class="form-control form-control-lg" name="firstName" [(ngModel)]="firstName" />
                     
                 </div>
     
-                <div class="form-outline mb-2 w-40">
-                    <label class="form-label text-dark" for="form1Example13"  >Last Name</label>
+                <div class="form-outline mb-2 w-40 col">
+                    <label class="form-label text-dark " for="form1Example13"  >Last Name</label>
                     <input placeholder="Enter Last Name" type="text" id="form1Example22" class="form-control form-control-lg" name="lastName" [(ngModel)]="lastName"/>
                 </div>
               </div>
@@ -93,7 +93,7 @@
     
                   <div class="form-outline mb-2">
                     <label class="form-label text-dark" for="form1Example13">Confirm Password</label>
-                    <input placeholder="Enter Confirm Password" type="password" id="form1Example25" class="form-control form-control-lg"  name="confirmPassword" [(ngModel)]="confirmPassword"/>
+                    <input placeholder="Confirm Password" type="password" id="form1Example25" class="form-control form-control-lg"  name="confirmPassword" [(ngModel)]="confirmPassword"/>
                   </div>
               </div>
 
@@ -107,7 +107,7 @@
               
     
               <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-lg btn-block w-100"  (click)="signupAccount()" >Sign Up</button>
+              <button type="submit" class="btn btn-primary btn-lg btn-block w-100"  (click)="signUpUser()" >Sign Up</button>
   
               <div class="d-flex justify-content-around align-items-center mb-4">
                 

@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormServiceService } from '../Service/form-service.service'
@@ -62,27 +64,24 @@ export class LoginSignupComponent implements OnInit {
       this.errormsg = 'Enter Mobile Number'
       return;
     }
-    if(this.confirmPassword=!this.password){
-      this.errormsg='Passwords do not match'
+    if (this.confirmPassword = !this.password) {
+      this.errormsg = 'Passwords do not match'
       return;
     }
     let check = `select * from loginTable where emailid= '${this.emailId}'`
     this.formService.loginCheck(check).subscribe(res => {
-      console.log('res emsill', res)
       if (res == 1) {
         this.errormsg = 'Email ID already Exist'
         return;
       }
       check = `select * from loginTable where mobile= '${this.mobileNumber}'`
       this.formService.loginCheck(check).subscribe(res => {
-        console.log('res mobile', res)
         if (res == 1) {
           this.errormsg = 'Mobile Number already Exist'
           return;
         }
         let payload = `insert into loginTable(firstName,lastName,emailId,passwrd,mobile) 
     values ('${this.firstName}','${this.lastName}','${this.emailId}','${this.password}','${this.mobileNumber}')`
-        console.log(payload);
         this.formService.signUpDataSave(payload).subscribe(res => {
           this.firstName = ""
           this.lastName = ""
@@ -91,13 +90,12 @@ export class LoginSignupComponent implements OnInit {
           this.mobileNumber = ""
           this.emailId = ""
           this.errormsg = ''
-          this.isSignUppage=!this.isSignUppage
-          this.isLogedInPage =!this.isLogedInPage
+          this.isSignUppage = !this.isSignUppage
+          this.isLogedInPage = !this.isLogedInPage
         })
 
       })
     })
-
 
   }
 
@@ -115,11 +113,9 @@ export class LoginSignupComponent implements OnInit {
       this.errormsg = 'User not found.'
       return;
     }
-    console.log(qry)
+
     this.formService.loginData(qry).subscribe(res => {
-      console.log(res)
       if (this.loginUserPassword == res.rows[0]["passwrd"]) {
-        console.log("=========================")
         localStorage.setItem("userName", res.rows[0]["firstname"])
         localStorage.setItem("lastName", res.rows[0]["lastname"])
         localStorage.setItem("email", res.rows[0]["emailid"])
@@ -127,14 +123,12 @@ export class LoginSignupComponent implements OnInit {
         this.router.navigateByUrl("/task");
       }
       this.errormsg = 'User not found.'
-
     })
   }
 
 
   keyPressNumeric(event: any) {
     var inp = String.fromCharCode(event.keyCode);
-
     if (/\d+\.?\d*/.test(inp)) {
       return true;
     } else {
@@ -143,6 +137,95 @@ export class LoginSignupComponent implements OnInit {
     }
   }
 
-}
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+  signUpUser() {
+    if (this.firstName == 'null' || this.firstName == 'undefined' || this.firstName == '' || this.firstName == null || this.firstName == undefined) {
+      this.errormsg = 'Enter First Name'
+      return;
+    }
+    if (this.lastName == 'null' || this.lastName == 'undefined' || this.lastName == '' || this.lastName == null || this.lastName == undefined) {
+      this.errormsg = 'Enter Last Name'
+      return;
+    }
+    if (this.emailId == 'null' || this.emailId == 'undefined' || this.emailId == '' || this.emailId == null || this.emailId == undefined) {
+      this.errormsg = 'Enter Email ID'
+      return;
+    }
+    if (this.password == 'null' || this.password == 'undefined' || this.password == '' || this.password == null || this.password == undefined) {
+      this.errormsg = 'Enter Password'
+      return;
+    }
+    if (this.confirmPassword == 'null' || this.confirmPassword == 'undefined' || this.confirmPassword == '' || this.confirmPassword == null || this.confirmPassword == undefined) {
+      this.errormsg = 'Enter Confirm Password'
+      return;
+    }
+    if (this.mobileNumber == 'null' || this.mobileNumber == 'undefined' || this.mobileNumber == '' || this.mobileNumber == null || this.mobileNumber == undefined) {
+      this.errormsg = 'Enter Mobile Number'
+      return;
+    }
+    if (this.confirmPassword = !this.password) {
+      this.errormsg = 'Passwords do not match'
+      return;
+    }
+    let payload = {
+      "firstName": this.firstName,
+      "lastName": this.lastName,
+      "password": this.password,
+      "mobile": this.mobileNumber,
+      "emailid": this.emailId
+    }
+    this.formService.signUpUser(payload).subscribe(res => {
+      if (res.success) {
+        this.firstName = ""
+        this.lastName = ""
+        this.confirmPassword = ""
+        this.password = ""
+        this.mobileNumber = ""
+        this.emailId = ""
+        this.isSignUppage = !this.isSignUppage
+        this.isLogedInPage = !this.isLogedInPage
+        this.errormsg = ''
+      } else {
+        this.errormsg = 'User is already exists'
+      }
+    })
+  }
+
+
+  loginUser() {
+    this.errormsg = '';
+    if (!this.loginUserName) {
+      this.errormsg = 'Please enter user name'
+    }
+    let payload = {}
+    if (this.loginUserName.includes("@")) {
+      payload = {
+        "emailid": this.loginUserName,
+        "password": this.loginUserPassword
+      }
+    } else if (Number.isInteger(this.loginUserName)) {
+      payload = {
+        "mobile": this.loginUserName,
+        "password": this.loginUserPassword
+      }
+    } else {
+      this.errormsg = 'User not found.'
+      return;
+    }
+    this.formService.loginUser(payload).subscribe(res => {
+      if (res.success) {
+        localStorage.setItem("userName", res.data.firstName)
+        localStorage.setItem("lastName", res.data.lastname)
+        localStorage.setItem("email", res.data.emailid)
+        localStorage.setItem("mobile", res.data.mobile)
+        this.router.navigateByUrl("/task")
+      } else {
+        this.errormsg = 'User ID or Password is wrong'
+      }
+    })
+  }
+
+
+}
 
