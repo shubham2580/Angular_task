@@ -81,15 +81,7 @@ export class FormServiceService {
     }))
   }
 
-  uploadDocumen2(formData:FormData): Observable<any>{
-    const headers = new HttpHeaders()
-    headers.append('application/json', 'Content-Type')
-    return this.http.post(this.url + '/uploadDocument', formData, { headers }).pipe(map(res => {
-      return res as any;
-    }, (error : any) => {
-      return error as any;
-    }))
-  }
+
 
   loginData(sapId : string){
     const headers = new HttpHeaders()
